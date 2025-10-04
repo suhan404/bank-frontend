@@ -13,14 +13,12 @@ const CreateAccount = () => {
   const [email, setEmail] = useState(user?.email);
   const [phone, setPhone] = useState("");
   const [accountType, setAccountType] = useState("");
-  const [deposit, setDeposit] = useState(500);
   const [profileImage, setProfileImage] = useState(null);
   const [nidImage1, setNidImage1] = useState(null);
   const [nidImage2, setNidImage2] = useState(null);
   
   // Error states
   const [phoneError, setPhoneError] = useState("");
-  const [depositError, setDepositError] = useState("");
 
   
   console.log("user",user)
@@ -37,15 +35,6 @@ const CreateAccount = () => {
     }
   };
 
-  const validateDeposit = (depositValue) => {
-    if (parseFloat(depositValue) < 500) {
-      setDepositError("Deposit must be at least 500");
-      return false;
-    } else {
-      setDepositError("");
-      return true;
-    }
-  };
 
   const handlePhoneChange = (e) => {
     const value = e.target.value;
@@ -53,20 +42,15 @@ const CreateAccount = () => {
     validatePhone(value);
   };
 
-  const handleDepositChange = (e) => {
-    const value = e.target.value;
-    setDeposit(value);
-    validateDeposit(value);
-  };
+  // ...existing code...
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Validate before submission
     const isPhoneValid = validatePhone(phone);
-    const isDepositValid = validateDeposit(deposit);
-    
-    if (!isPhoneValid || !isDepositValid) {
+
+    if (!isPhoneValid) {
       return;
     }
 
@@ -102,7 +86,7 @@ const CreateAccount = () => {
                 email,
                 phone,
                 accountType,
-                deposit: parseFloat(deposit),
+                deposit: 0,
                 profileImage: res1.data.data.display_url,  // Get the URL of the uploaded image from the response
                 nidImage1: res2.data.data.display_url,  // Get the URL of the uploaded image from the response
                 nidImage2: res3.data.data.display_url,  // Get the URL of the uploaded image from the response
@@ -128,7 +112,6 @@ const CreateAccount = () => {
           setEmail("");
           setPhone("");
           setAccountType("");
-          setDeposit("");
           setProfileImage(null);
           setNidImage1(null);
           setNidImage2(null);
@@ -221,22 +204,7 @@ const CreateAccount = () => {
             </select>
           </label>
 
-          {/* Initial Deposit */}
-          <label className="form-control w-full my-6">
-            <div className="label">
-              <span className="label-text">Initial Deposit*</span>
-            </div>
-            <input
-              type="number"
-              placeholder="Deposit"
-              value={deposit}
-              min={500}
-              onChange={handleDepositChange}
-              required
-              className={`input input-bordered w-full ${depositError ? 'input-error' : ''}`}
-            />
-            {depositError && <span className="text-error text-sm mt-1">{depositError}</span>}
-          </label>
+          {/* Initial Deposit removed - deposit is set to 0 on the server side */}
 
           {/* Profile Image */}
           <label className="form-control w-full my-6">

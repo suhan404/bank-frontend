@@ -21,6 +21,8 @@ import LoanList from "../pages/Admin/LoanList";
 import UserLoans from "../pages/User/UserLoans";
 import ChequeBook from "../pages/User/ChequeBook";
 import ChequeRequestList from "../pages/Admin/ChequeRequestList";
+import AllAccount from "../pages/Admin/AllAccount";
+import AllTransaction from "../pages/Admin/AllTransaction";
 
 export const router = createBrowserRouter([
     {
@@ -118,6 +120,14 @@ export const router = createBrowserRouter([
             {
                 path:"cheque-book-request-list",
                 element: <ChequeRequestList></ChequeRequestList>
+            },
+            {
+                path: "all-accounts",
+                element: <AllAccount></AllAccount>
+            },
+            {
+                path: "all-transactions",
+                element: <AllTransaction></AllTransaction>
             }
             
         ]
